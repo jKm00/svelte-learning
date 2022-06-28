@@ -64,11 +64,11 @@
 	let feedback: string
 
 	$: reviewCount = reviews.length
-	$: average = reviews.reduce((subtotal, review) => subtotal + review.rating, 0) / reviews.length
+	$: average = Math.round(reviews.reduce((subtotal, review) => subtotal + review.rating, 0) / reviews.length * 100) / 100
 
 	function handleSubmit(): void {
 		if (selected === undefined) return
-		reviews = [...reviews, { id: reviewId++, rating: selected, feedback }]
+		reviews = [{ id: reviewId++, rating: selected, feedback }, ...reviews]
 		feedback = ''
 	}
 
