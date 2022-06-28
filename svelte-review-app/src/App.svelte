@@ -60,7 +60,7 @@
 
 	// States
 	let reviewId = 0
-	let reviews: Review[] = [{ id: reviewId++, rating: 10, feedback: 'Just a test' }]
+	let reviews: Review[] = []
 	let selected: number
 	let feedback: string
 
