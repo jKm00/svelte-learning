@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Option } from './types/Option'
 	import type { Review } from './types/Review'
+	import ReviewView from './components/ReviewView.svelte'
 
 	// Initializes ratings
 	let id = 0
@@ -71,7 +72,8 @@
 		feedback = ''
 	}
 
-	function removeReview(review: Review): void {
+	function removeReview(event: CustomEvent): void {
+		const review = event.detail
 		reviews = reviews.filter(r => r !== review)
 	}
 </script>
@@ -93,12 +95,8 @@
 		<p>{average ? 'Ratings Average: ' + average : 'No ratings'}</p>
 	</div>
 	<div>
-		{#each reviews as review}
-			<div>
-				<span>{review.rating}</span>
-				<p>{review.feedback}</p>
-				<button on:click={removeReview(review)}>x</button>
-			</div>
+		{#each reviews as review (review.id)}
+			<ReviewView review={review} on:remove={removeReview} />
 		{/each}
 	</div>
 </main>
