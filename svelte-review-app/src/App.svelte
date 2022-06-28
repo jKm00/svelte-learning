@@ -107,7 +107,7 @@
 	</form>
 	<!-- Stats -->
 	<div class="stats">
-		<p>{reviewCount} Reviews</p>
+		<p>{reviewCount} {reviewCount === 1 ? 'Review' : 'Reviews'}</p>
 		<p>{average ? 'Ratings Average: ' + average : 'No ratings'}</p>
 	</div>
 	<!-- List of reviews -->
