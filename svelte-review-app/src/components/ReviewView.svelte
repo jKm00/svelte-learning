@@ -3,13 +3,18 @@
 
   const dispatch = createEventDispatcher();
 
+  // Props
   export let review;
 
+  /**
+   * Dispatches a remove event containing the review
+   */
   function handleClick() {
     dispatch('remove', review)
   }
 </script>
 
+<!-- Review -->
 <div class="box review">
   <span>{review.rating}</span>
   <p>{review.feedback}</p>

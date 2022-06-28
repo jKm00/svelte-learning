@@ -58,20 +58,30 @@
 		}
 	]
 
+	// States
 	let reviewId = 0
 	let reviews: Review[] = [{ id: reviewId++, rating: 10, feedback: 'Just a test' }]
 	let selected: number
 	let feedback: string
 
+	// Computed values
 	$: reviewCount = reviews.length
 	$: average = Math.round(reviews.reduce((subtotal, review) => subtotal + review.rating, 0) / reviews.length * 100) / 100
 
+	/**
+	 * Adds a review to the list if all fields are filled
+	 */
 	function handleSubmit(): void {
 		if (selected === undefined) return
 		reviews = [{ id: reviewId++, rating: selected, feedback }, ...reviews]
 		feedback = ''
 	}
 
+	/**
+	 * Removes a review from the list
+	 * @param {CustomEvent} event, the event that is triggered when the remove button
+	 * is pressed. Contains the review that is to be deleted
+	 */
 	function removeReview(event: CustomEvent): void {
 		const review = event.detail
 		reviews = reviews.filter(r => r !== review)
@@ -79,6 +89,7 @@
 </script>
 
 <main>
+	<!-- Submit form -->
 	<form on:submit|preventDefault={handleSubmit} class="box">
 		<fieldset>
 			<legend>How would you rate your service with us?</legend>
@@ -94,10 +105,12 @@
 			</div>
 		</fieldset>
 	</form>
+	<!-- Stats -->
 	<div class="stats">
 		<p>{reviewCount} Reviews</p>
 		<p>{average ? 'Ratings Average: ' + average : 'No ratings'}</p>
 	</div>
+	<!-- List of reviews -->
 	<div class="review-wrapper">
 		{#each reviews as review (review.id)}
 			<ReviewView review={review} on:remove={removeReview} />
